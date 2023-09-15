@@ -1,0 +1,2 @@
+caminar,walk
+sonreir,smile
