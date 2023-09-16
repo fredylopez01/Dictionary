@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import co.edu.uptc.model.DictionaryTraduction;
-import co.edu.uptc.model.Word;
 
 public class Persistence {
 	private String routeEnglish;
@@ -25,30 +25,21 @@ public class Persistence {
 		BufferedReader buffer = new BufferedReader(file);
 		String line;
 		while((line = buffer.readLine()) != null) {
-			readLine(line, dictionary);
+			String[] synonyms = line.split(",");
+			dictionary.addWord(synonyms[0], synonyms[1]);
 		}
 		file.close();
 	}
 	
-	public void readLine(String line, DictionaryTraduction dictionary) {
-		String[] synonyms = line.split(",");
-		Word word = new Word(synonyms[0], synonyms[1]);
-		dictionary.addWord(word);
-	}
-	
-	public void saveWords(ArrayList<Word> words, String route) throws FileNotFoundException, IOException {
+	public void saveWords(DictionaryTraduction dictionary, String route) throws FileNotFoundException, IOException {
 		FileWriter file = new FileWriter(route);
-		String dictionary = wordsString(words);
-		file.write(dictionary);
-		file.close();
-	}
-	
-	public String wordsString(ArrayList<Word> words) {
-		StringBuffer dictionary = new StringBuffer();
-		for(Word i: words) {
-			dictionary.append(i.getWord()+"," + i.getTraduction() + "\n");
+		Set<Entry<String, String>> words = dictionary.getWords().entrySet();
+		StringBuilder txtDictionary = new StringBuilder();
+		for (Entry<String, String> entry: words) {
+			txtDictionary.append(entry.getKey() + "," + entry.getValue() + "\n");
 		}
-		return dictionary.toString();
+		file.write(txtDictionary.toString());
+		file.close();
 	}
 
 	public String getRouteEnglish() {

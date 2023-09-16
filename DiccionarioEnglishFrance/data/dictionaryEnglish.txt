@@ -1,2 +1,5 @@
 caminar,walk
 sonreir,smile
+hola,hello
+computadora,computer
+adios,goodbye

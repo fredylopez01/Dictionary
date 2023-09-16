@@ -1,47 +1,27 @@
 package co.edu.uptc.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DictionaryTraduction {
-	private ArrayList<Word> words;
+	private HashMap<String, String> words;
 
 	public DictionaryTraduction() {
-		words = new ArrayList<Word>();
+		words = new HashMap<String, String>();
 	}
 	
-	public void addWord(Word word) {
-		boolean add = false;
-		for (Word i : words) {
-			if(i.getWord().equals(word.getWord())) {
-				add = true;
-			}
-		}
-		if(!add) {
-			words.add(word);
-			add = true;
-		}
+	public void addWord(String word, String traduction) {
+		words.put(word, traduction);
 	}
 	
-	public Word searchWord(String txtWord) {
-		Word word = null;
-		for (Word i : words) {
-			if(i.getWord().equals(txtWord)) {
-				word = i;
-			}
-		}
-		return word;
+	public String searchTraduction(String word) {
+		return words.get(word);
 	}
-	
-	@Override
-	public String toString() {
-		return words.toString();
-	}
-	
-	public ArrayList<Word> getWords() {
+
+	public HashMap<String, String> getWords() {
 		return words;
 	}
 
-	public void setWords(ArrayList<Word> words) {
+	public void setWords(HashMap<String, String> words) {
 		this.words = words;
 	}
 	

@@ -4,10 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collections;
 
 import co.edu.uptc.model.DictionaryTraduction;
-import co.edu.uptc.model.Word;
 import co.edu.uptc.persitence.Persistence;
 import co.edu.uptc.view.View;
 
@@ -55,9 +53,9 @@ public class Presenter implements ActionListener {
 	
 	public void tEnglish() {
 		String txtWord = viewTest.txtWord();
-		Word wEnglish = dictEnglish.searchWord(txtWord);
-		if(wEnglish != null) {
-			viewTest.updateTEnGlish(wEnglish.getTraduction());
+		String traduction = dictEnglish.searchTraduction(txtWord);
+		if(traduction != null) {
+			viewTest.updateTEnGlish(traduction);
 		} else {
 			viewTest.updateTEnGlish("Sin traducir");
 		}
@@ -65,42 +63,40 @@ public class Presenter implements ActionListener {
 	
 	public void tFrance() {
 		String txtWord = viewTest.txtWord();
-		Word wFrance = dictFrance.searchWord(txtWord);
-		if(wFrance != null) {
-			viewTest.updateTFrance(wFrance.getTraduction());
+		String traduction = dictFrance.searchTraduction(txtWord);
+		if(traduction != null) {
+			viewTest.updateTFrance(traduction);
 		} else {
 			viewTest.updateTFrance("Sin traducir");
 		}
 	}
 	
 	public void addTEnglish() {
-		dictEnglish.addWord(createWord());
+		createWord(dictEnglish);
 		viewTest.updateAddNewWord();
 		viewTest.updateNumber(dictEnglish.getWords().size(), dictFrance.getWords().size());
 		saveDictionaries();
 	}
 	
 	public void addTFrance() {
-		dictFrance.addWord(createWord());
+		createWord(dictFrance);
 		viewTest.updateAddNewWord();
 		viewTest.updateNumber(dictEnglish.getWords().size(), dictFrance.getWords().size());
 		saveDictionaries();
 	}
 	
-	public Word createWord() {
-		Word newWord = null;
+	public void createWord(DictionaryTraduction dictionary) {
 		String txtNewWord = viewTest.txtNewWord();
 		String newTraduction = viewTest.txtNewTraduction();
 		if(!txtNewWord.equals("") && !newTraduction.equals("")) {
-			newWord = new Word(txtNewWord, newTraduction);
+			dictionary.addWord(txtNewWord, newTraduction);
 		}
-		return newWord;
 	}
 	
 	public void saveDictionaries() {
 		try {
-			persistenceTest.saveWords(dictEnglish.getWords(), persistenceTest.getRouteEnglish());
-			persistenceTest.saveWords(dictFrance.getWords(), persistenceTest.getRouteFrance());
+			persistenceTest.saveWords(dictEnglish, persistenceTest.getRouteEnglish());
+			persistenceTest.saveWords(dictFrance, persistenceTest.getRouteFrance());
 		}  catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado-" + e.getMessage());
 		} catch (IOException e) {
