@@ -18,7 +18,8 @@ public class Presenter implements ActionListener {
 	private View viewTest;
 	private DictionaryTraduction dictEnglish;
 	private DictionaryTraduction dictFrance;
-	private Persistence persistenceTest;
+	private Persistence persistenceEnglish;
+	private Persistence persistenceFrench;
 	private PersistenceXML persistenceXMLEnglish;
 	private PersistenceXML persistenceXMLFrench;
 	
@@ -26,7 +27,8 @@ public class Presenter implements ActionListener {
 		viewTest = new View(this);
 		dictEnglish = new DictionaryTraduction();
 		dictFrance = new DictionaryTraduction();
-		persistenceTest = new Persistence("data/dictionaryEnglish.txt", "data/dictionaryFrance.txt");
+		persistenceEnglish = new Persistence("data/dictionaryEnglish.txt");
+		persistenceFrench = new Persistence("data/dictionaryFrance.txt");
 		createPersistences();
 		readDates();
 		viewTest.updateNumberEnglish(dictEnglish.getWords().size());
@@ -45,8 +47,8 @@ public class Presenter implements ActionListener {
 	
 	public void readDates() {
 		try {
-			persistenceTest.readDictionary(dictEnglish, persistenceTest.getRouteEnglish());
-			persistenceTest.readDictionary(dictFrance, persistenceTest.getRouteFrance());
+			persistenceEnglish.readDictionary(dictEnglish);
+			persistenceFrench.readDictionary(dictFrance);
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado-" + e.getMessage());
 		} catch (IOException e) {
@@ -128,8 +130,8 @@ public class Presenter implements ActionListener {
 	
 	public void saveDictionaries() {
 		try {
-			persistenceTest.saveWords(dictEnglish, persistenceTest.getRouteEnglish());
-			persistenceTest.saveWords(dictFrance, persistenceTest.getRouteFrance());
+			persistenceEnglish.saveWords(dictEnglish);
+			persistenceFrench.saveWords(dictFrance);
 		}  catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado-" + e.getMessage());
 		} catch (IOException e) {

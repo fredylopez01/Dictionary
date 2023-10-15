@@ -11,15 +11,13 @@ import java.util.Set;
 import co.edu.uptc.model.DictionaryTraduction;
 
 public class Persistence {
-	private String routeEnglish;
-	private String routeFrance;
+	private String route;
 	
-	public Persistence(String routeEnglish, String routeFrance) {
-		this.routeEnglish = routeEnglish;
-		this.routeFrance = routeFrance;
+	public Persistence(String route) {
+		this.route = route;
 	}
 	
-	public void readDictionary(DictionaryTraduction dictionary, String route) throws FileNotFoundException, IOException {
+	public void readDictionary(DictionaryTraduction dictionary) throws FileNotFoundException, IOException {
 		FileReader file;
 		file = new FileReader(route);
 		BufferedReader buffer = new BufferedReader(file);
@@ -31,7 +29,7 @@ public class Persistence {
 		file.close();
 	}
 	
-	public void saveWords(DictionaryTraduction dictionary, String route) throws FileNotFoundException, IOException {
+	public void saveWords(DictionaryTraduction dictionary) throws FileNotFoundException, IOException {
 		FileWriter file = new FileWriter(route);
 		Set<Entry<String, String>> words = dictionary.getWords().entrySet();
 		StringBuilder txtDictionary = new StringBuilder();
@@ -42,20 +40,12 @@ public class Persistence {
 		file.close();
 	}
 
-	public String getRouteEnglish() {
-		return routeEnglish;
+	public String getRoute() {
+		return route;
 	}
 
-	public void setRouteEnglish(String routeEnglish) {
-		this.routeEnglish = routeEnglish;
-	}
-
-	public String getRouteFrance() {
-		return routeFrance;
-	}
-
-	public void setRouteFrance(String routeFrance) {
-		this.routeFrance = routeFrance;
+	public void setRouteEnglish(String route) {
+		this.route = route;
 	}
 	
 }
