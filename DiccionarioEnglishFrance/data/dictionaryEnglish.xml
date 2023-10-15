@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<words>
+            
+
+    
+    <word>
+                
+        <key>teléfono</key>
+                
+        <value>phone</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>caminar</key>
+                
+        <value>walk</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>television</key>
+                
+        <value>TV</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>sonreir</key>
+                
+        <value>smile</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>gafas</key>
+                
+        <value>glasses</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>nariz</key>
+                
+        <value>nose</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>hola</key>
+                
+        <value>hello</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>computadora</key>
+                
+        <value>computer</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>gritar</key>
+                
+        <value>shout</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>silla</key>
+                
+        <value>chair</value>
+            
+    </word>
+        
+    <word>
+                
+        <key>adios</key>
+                
+        <value>goodbye</value>
+            
+    </word>
+    
+    <word>
+        <key>delimited</key>
+        <value>delimitado</value>
+    </word>
+</words>

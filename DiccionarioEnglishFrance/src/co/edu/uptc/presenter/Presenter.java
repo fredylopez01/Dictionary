@@ -5,8 +5,13 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import co.edu.uptc.model.DictionaryTraduction;
 import co.edu.uptc.persitence.Persistence;
+import co.edu.uptc.persitence.PersistenceXML;
 import co.edu.uptc.view.View;
 
 public class Presenter implements ActionListener {
@@ -14,14 +19,28 @@ public class Presenter implements ActionListener {
 	private DictionaryTraduction dictEnglish;
 	private DictionaryTraduction dictFrance;
 	private Persistence persistenceTest;
+	private PersistenceXML persistenceXMLEnglish;
+	private PersistenceXML persistenceXMLFrench;
 	
 	public Presenter() {
 		viewTest = new View(this);
 		dictEnglish = new DictionaryTraduction();
 		dictFrance = new DictionaryTraduction();
 		persistenceTest = new Persistence("data/dictionaryEnglish.txt", "data/dictionaryFrance.txt");
+		createPersistences();
 		readDates();
-		viewTest.updateNumber(dictEnglish.getWords().size(), dictFrance.getWords().size());
+		viewTest.updateNumberEnglish(dictEnglish.getWords().size());
+		viewTest.updateNumberFrench(dictFrance.getWords().size());
+	}
+	
+	public void createPersistences() {
+		try {
+			persistenceXMLEnglish = new PersistenceXML("data/dictionaryEnglish.xml");
+			persistenceXMLFrench = new PersistenceXML("data/dictionaryFrance.xml");
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void readDates() {
@@ -36,7 +55,7 @@ public class Presenter implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		Presenter presenterTest = new Presenter();
+		new Presenter();
 	}
 
 	@Override
@@ -73,15 +92,17 @@ public class Presenter implements ActionListener {
 	
 	public void addTEnglish() {
 		createWord(dictEnglish);
+		addWordXML("English");
 		viewTest.updateAddNewWord();
-		viewTest.updateNumber(dictEnglish.getWords().size(), dictFrance.getWords().size());
+		viewTest.updateNumberEnglish(dictEnglish.getWords().size());
 		saveDictionaries();
 	}
 	
 	public void addTFrance() {
 		createWord(dictFrance);
+		addWordXML("Frech");
 		viewTest.updateAddNewWord();
-		viewTest.updateNumber(dictEnglish.getWords().size(), dictFrance.getWords().size());
+		viewTest.updateNumberFrench(dictFrance.getWords().size());
 		saveDictionaries();
 	}
 	
@@ -90,6 +111,18 @@ public class Presenter implements ActionListener {
 		String newTraduction = viewTest.txtNewTraduction();
 		if(!txtNewWord.equals("") && !newTraduction.equals("")) {
 			dictionary.addWord(txtNewWord, newTraduction);
+		}
+	}
+	
+	public void addWordXML(String dictionary) {
+		String word = viewTest.txtNewWord();
+		String traduction = viewTest.txtNewTraduction();
+		switch(dictionary) {
+		case "English":
+			persistenceXMLEnglish.writeDOM2(word, traduction);
+			break;
+		case "French":
+			persistenceXMLFrench.writeDOM2(word, traduction);
 		}
 	}
 	

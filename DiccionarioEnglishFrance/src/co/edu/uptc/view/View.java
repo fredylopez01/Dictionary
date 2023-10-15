@@ -56,8 +56,11 @@ public class View extends JFrame {
 		panelThree.getTxtNewTraduction().setText("");
 	}
 	
-	public void updateNumber(int numEnglish, int numFrance) {
+	public void updateNumberEnglish(int numEnglish) {
 		panelTwo.getNumberWEnglish().setText(String.valueOf(numEnglish));
+	}
+	
+	public void updateNumberFrench( int numFrance) {
 		panelTwo.getNumberWFrance().setText(String.valueOf(numFrance));
 	}
 }

@@ -1,5 +1,12 @@
+teléfono,phone
 caminar,walk
+television,TV
 sonreir,smile
+gafas,glasses
+delimited,delimitado
+nariz,nose
 hola,hello
 computadora,computer
+gritar,shout
+silla,chair
 adios,goodbye
