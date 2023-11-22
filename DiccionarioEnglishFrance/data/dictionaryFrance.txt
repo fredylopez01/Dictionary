@@ -1,2 +1,5 @@
+perro,chien
+caminar,marcher
 computadora,ordinateur
 hermosa,belle
+rosa,rose

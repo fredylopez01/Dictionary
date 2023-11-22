@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,7 +25,7 @@ import org.xml.sax.SAXException;
 
 import co.edu.uptc.model.DictionaryTraduction;
 
-public class PersistenceXML {
+public class PersistenceXML implements IPersistence {
 	private Document doc;
 	private String route;
 	
@@ -59,36 +60,31 @@ public class PersistenceXML {
 		Node node = (Node) nodeList.item(0);
 		return node.getNodeValue();
 	}
-	
-	public void writeDOM2(/*DictionaryTraduction dictionary*/String key, String value) {
-		Element rootElement = doc.getDocumentElement();
-//		Set<Entry<String, String>> words = dictionary.getWords().entrySet();
-//		for (Entry<String, String> entry: words) {
-			rootElement.appendChild(newWord(key,value));
-//			rootElement.appendChild(newWord(entry.getKey(),entry.getValue()));
-//		}
+		
+	public void writeDOM2(Document doc) throws TransformerException {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer;
-		try {
-			transformer = transformerFactory.newTransformer();
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-			DOMSource source = new DOMSource(doc);
-			StreamResult file2 = new StreamResult(new File(route));
-			transformer.transform(source, file2);
-		} catch (TransformerException e1) {
-			e1.printStackTrace();
-		}
+		transformer = transformerFactory.newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		DOMSource source = new DOMSource(doc);
+		StreamResult file2 = new StreamResult(new File(route));
+		transformer.transform(source, file2);
+	}
+	
+	public void addWordXML(String key, String value, Document doc) {
+		Element rootElement = doc.getDocumentElement();
+		rootElement.appendChild(newWord(key,value, doc));
 	}
 
-	public Node newWord(String key, String value) {
+	public Node newWord(String key, String value,Document doc) {
 		Element word = doc.createElement("word");
-		word.appendChild(getWordElements("key", key));
-		word.appendChild(getWordElements("value", value));
+		word.appendChild(getWordElements("key", key, doc));
+		word.appendChild(getWordElements("value", value, doc));
 		return word;
 	}
 
-	public Node getWordElements(String name, String value) {
+	public Node getWordElements(String name, String value, Document doc) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
@@ -100,6 +96,26 @@ public class PersistenceXML {
 
 	public void setRoute(String route) {
 		this.route = route;
+	}
+
+	@Override
+	public void writeDates(DictionaryTraduction dictionary) {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			DOMImplementation implementation = builder.getDOMImplementation();
+	        Document document = implementation.createDocument(null, "words", null);
+	        document.setXmlVersion("1.0");
+	        Set<Entry<String, String>> words = dictionary.getWords().entrySet();
+			for (Entry<String, String> entry: words) {
+				addWordXML(entry.getKey(), entry.getValue(), document);
+			}
+            writeDOM2(document);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

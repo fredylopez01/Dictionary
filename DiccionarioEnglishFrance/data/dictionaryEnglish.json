@@ -1,0 +1,67 @@
+[ {
+  "key" : "avión",
+  "value" : "airplane"
+}, {
+  "key" : "perro",
+  "value" : "dog"
+}, {
+  "key" : "chaqueta",
+  "value" : "jacket"
+}, {
+  "key" : "escritorio",
+  "value" : "desktop"
+}, {
+  "key" : "caminar",
+  "value" : "walk"
+}, {
+  "key" : "television",
+  "value" : "TV"
+}, {
+  "key" : "gafas",
+  "value" : "glasses"
+}, {
+  "key" : "camello",
+  "value" : "camel"
+}, {
+  "key" : "delimited",
+  "value" : "delimitado"
+}, {
+  "key" : "nariz",
+  "value" : "nose"
+}, {
+  "key" : "hola",
+  "value" : "hello"
+}, {
+  "key" : "computadora",
+  "value" : "computer"
+}, {
+  "key" : "silla",
+  "value" : "chair"
+}, {
+  "key" : "barato",
+  "value" : "cheap"
+}, {
+  "key" : "adios",
+  "value" : "goodbye"
+}, {
+  "key" : "computador",
+  "value" : "computer"
+}, {
+  "key" : "carro",
+  "value" : "car"
+}, {
+  "key" : "caballo",
+  "value" : "horse"
+}, {
+  "key" : "teléfono",
+  "value" : "phone"
+}, {
+  "key" : "caro",
+  "value" : "expansive"
+}, {
+  "key" : "sonreir",
+  "value" : "smile"
+}, {
+  "key" : "gritar",
+  "value" : "shout"
+} ]

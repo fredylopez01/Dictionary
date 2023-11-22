@@ -2,6 +2,7 @@ package co.edu.uptc.view;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
@@ -11,14 +12,26 @@ public class View extends JFrame {
 	private PanelOne panelOne;
 	private PanelTwo panelTwo;
 	private PaneelThree panelThree;
+	private JDChooseTypeFile chooserFile;
 	
-	public View(ActionListener listener) {
-		super("Synonyms Dictionary");
+	public View(ActionListener listener, WindowListener wListener) {
+		super("Dictionary Traduction");
+		this.listener = listener;
 		setSize(350, 300);
-		this.listener = listener; 
+		addWindowListener(wListener);
 		initComponents();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+	}
+	
+	public void selectFile() {
+		setVisible(false);
+		chooserFile = new JDChooseTypeFile(this, listener);
+		chooserFile.setVisible(true);
+	}
+	
+	public void closeSelecFile() {
+		chooserFile.dispose();
 		setVisible(true);
 	}
 	
@@ -63,4 +76,13 @@ public class View extends JFrame {
 	public void updateNumberFrench( int numFrance) {
 		panelTwo.getNumberWFrance().setText(String.valueOf(numFrance));
 	}
+
+	public JDChooseTypeFile getChooserFile() {
+		return chooserFile;
+	}
+
+	public void setChooserFile(JDChooseTypeFile chooserFile) {
+		this.chooserFile = chooserFile;
+	}
+	
 }

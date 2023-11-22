@@ -2,7 +2,8 @@ package co.edu.uptc.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,66 +11,95 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import co.edu.uptc.model.DictionaryTraduction;
+import co.edu.uptc.persitence.IPersistence;
 import co.edu.uptc.persitence.Persistence;
+import co.edu.uptc.persitence.PersistenceJSON;
 import co.edu.uptc.persitence.PersistenceXML;
 import co.edu.uptc.view.View;
 
-public class Presenter implements ActionListener {
+public class Presenter implements ActionListener, WindowListener {
 	private View viewTest;
 	private DictionaryTraduction dictEnglish;
 	private DictionaryTraduction dictFrance;
-	private Persistence persistenceEnglish;
-	private Persistence persistenceFrench;
-	private PersistenceXML persistenceXMLEnglish;
-	private PersistenceXML persistenceXMLFrench;
+	private IPersistence persistenceEnglish;
+	private IPersistence persistenceFrench;
 	
 	public Presenter() {
-		viewTest = new View(this);
+		viewTest = new View(this, this);
 		dictEnglish = new DictionaryTraduction();
 		dictFrance = new DictionaryTraduction();
-		persistenceEnglish = new Persistence("data/dictionaryEnglish.txt");
-		persistenceFrench = new Persistence("data/dictionaryFrance.txt");
-		createPersistences();
-		readDates();
+		viewTest.selectFile();
 		viewTest.updateNumberEnglish(dictEnglish.getWords().size());
 		viewTest.updateNumberFrench(dictFrance.getWords().size());
 	}
 	
-	public void createPersistences() {
-		try {
-			persistenceXMLEnglish = new PersistenceXML("data/dictionaryEnglish.xml");
-			persistenceXMLFrench = new PersistenceXML("data/dictionaryFrance.xml");
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void readDates() {
-		try {
-			persistenceEnglish.readDictionary(dictEnglish);
-			persistenceFrench.readDictionary(dictFrance);
-		} catch (FileNotFoundException e) {
-			System.out.println("Archivo no encontrado-" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("Archivo encontrado, pero no se puede utilizar-" + e.getMessage());
-		}
-	}
-
-	public static void main(String[] args) {
-		new Presenter();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getActionCommand();
 		String comand = source.toString();
 		switch(comand) {
+			case "chooseFile" -> chooseFile();
 			case "tEnglish"-> tEnglish();
 			case "tFrance"-> tFrance();
 			case "addTEnglish"-> addTEnglish();
 			case "addTFrance"-> addTFrance();
 		}
+	}
+	
+	public void chooseFile() {
+		boolean isTxt = viewTest.getChooserFile().getOptiontxt().isSelected();
+		boolean isXml = viewTest.getChooserFile().getOptionxml().isSelected();
+		String typeFile = null;
+		if(isTxt) {
+			typeFile = "txt";
+		} else if(isXml) {
+			typeFile = "xml";
+		} else {
+			typeFile = "json";
+		}
+		viewTest.closeSelecFile();
+		createPersistence(typeFile);
+		readDates();
+	}
+	
+	public void createPersistence(String type) {
+		switch (type) {
+		case "txt" -> createPersistenceTXT();
+		case "xml" -> createPersistencesXML();
+		case "json" -> createPersistencesJSON();
+		}
+	}
+	
+	public void createPersistenceTXT() {
+		persistenceEnglish = new Persistence("data/dictionaryEnglish.txt");
+		persistenceFrench = new Persistence("data/dictionaryFrance.txt");
+	}
+	
+	public void createPersistencesXML() {
+		try {
+			persistenceEnglish = new PersistenceXML("data/dictionaryEnglish.xml");
+			persistenceFrench = new PersistenceXML("data/dictionaryFrance.xml");
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createPersistencesJSON() {
+		try {
+			persistenceEnglish = new PersistenceJSON("data/dictionaryEnglish.json");
+			persistenceFrench = new PersistenceJSON("data/dictionaryFrench.json");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void readDates() {
+		persistenceEnglish.readDates(dictEnglish);
+		persistenceFrench.readDates(dictFrance);
+	}
+
+	public static void main(String[] args) {
+		new Presenter();
 	}
 	
 	public void tEnglish() {
@@ -94,18 +124,14 @@ public class Presenter implements ActionListener {
 	
 	public void addTEnglish() {
 		createWord(dictEnglish);
-		addWordXML("English");
 		viewTest.updateAddNewWord();
 		viewTest.updateNumberEnglish(dictEnglish.getWords().size());
-		saveDictionaries();
 	}
 	
 	public void addTFrance() {
 		createWord(dictFrance);
-		addWordXML("Frech");
 		viewTest.updateAddNewWord();
 		viewTest.updateNumberFrench(dictFrance.getWords().size());
-		saveDictionaries();
 	}
 	
 	public void createWord(DictionaryTraduction dictionary) {
@@ -115,27 +141,51 @@ public class Presenter implements ActionListener {
 			dictionary.addWord(txtNewWord, newTraduction);
 		}
 	}
-	
-	public void addWordXML(String dictionary) {
-		String word = viewTest.txtNewWord();
-		String traduction = viewTest.txtNewTraduction();
-		switch(dictionary) {
-		case "English":
-			persistenceXMLEnglish.writeDOM2(word, traduction);
-			break;
-		case "French":
-			persistenceXMLFrench.writeDOM2(word, traduction);
-		}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		saveDictionaries();
+//		createPersistencesJSON();
+//		saveDictionaries();
 	}
 	
 	public void saveDictionaries() {
-		try {
-			persistenceEnglish.saveWords(dictEnglish);
-			persistenceFrench.saveWords(dictFrance);
-		}  catch (FileNotFoundException e) {
-			System.out.println("Archivo no encontrado-" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("Archivo encontrado, pero no se puede utilizar-" + e.getMessage());
-		}
+		persistenceEnglish.writeDates(dictEnglish);
+		persistenceFrench.writeDates(dictFrance);
+	}
+	
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

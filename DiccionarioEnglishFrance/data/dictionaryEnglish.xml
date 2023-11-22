@@ -1,98 +1,91 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <words>
-            
-
-    
-    <word>
-                
-        <key>teléfono</key>
-                
-        <value>phone</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>caminar</key>
-                
-        <value>walk</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>television</key>
-                
-        <value>TV</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>sonreir</key>
-                
-        <value>smile</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>gafas</key>
-                
-        <value>glasses</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>nariz</key>
-                
-        <value>nose</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>hola</key>
-                
-        <value>hello</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>computadora</key>
-                
-        <value>computer</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>gritar</key>
-                
-        <value>shout</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>silla</key>
-                
-        <value>chair</value>
-            
-    </word>
-        
-    <word>
-                
-        <key>adios</key>
-                
-        <value>goodbye</value>
-            
-    </word>
-    
-    <word>
-        <key>delimited</key>
-        <value>delimitado</value>
-    </word>
+  <word>
+    <key>avión</key>
+    <value>airplane</value>
+  </word>
+  <word>
+    <key>perro</key>
+    <value>dog</value>
+  </word>
+  <word>
+    <key>chaqueta</key>
+    <value>jacket</value>
+  </word>
+  <word>
+    <key>escritorio</key>
+    <value>desktop</value>
+  </word>
+  <word>
+    <key>caminar</key>
+    <value>walk</value>
+  </word>
+  <word>
+    <key>television</key>
+    <value>TV</value>
+  </word>
+  <word>
+    <key>gafas</key>
+    <value>glasses</value>
+  </word>
+  <word>
+    <key>camello</key>
+    <value>camel</value>
+  </word>
+  <word>
+    <key>delimited</key>
+    <value>delimitado</value>
+  </word>
+  <word>
+    <key>nariz</key>
+    <value>nose</value>
+  </word>
+  <word>
+    <key>hola</key>
+    <value>hello</value>
+  </word>
+  <word>
+    <key>computadora</key>
+    <value>computer</value>
+  </word>
+  <word>
+    <key>silla</key>
+    <value>chair</value>
+  </word>
+  <word>
+    <key>barato</key>
+    <value>cheap</value>
+  </word>
+  <word>
+    <key>adios</key>
+    <value>goodbye</value>
+  </word>
+  <word>
+    <key>computador</key>
+    <value>computer</value>
+  </word>
+  <word>
+    <key>carro</key>
+    <value>car</value>
+  </word>
+  <word>
+    <key>caballo</key>
+    <value>horse</value>
+  </word>
+  <word>
+    <key>teléfono</key>
+    <value>phone</value>
+  </word>
+  <word>
+    <key>caro</key>
+    <value>expansive</value>
+  </word>
+  <word>
+    <key>sonreir</key>
+    <value>smile</value>
+  </word>
+  <word>
+    <key>gritar</key>
+    <value>shout</value>
+  </word>
 </words>
