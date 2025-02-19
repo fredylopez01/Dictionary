@@ -1,4 +1,10 @@
 [ {
+  "key" : "caminar",
+  "value" : "marcher"
+}, {
+  "key" : "árbol",
+  "value" : "arbre"
+}, {
   "key" : "computadora",
   "value" : "ordinateur"
 }, {
